@@ -1,0 +1,113 @@
+body {
+  margin: 0;
+  background: radial-gradient(circle at 15% 15%, #dbeafe 0%, #fdf4ff 35%, #f5f7ff 100%);
+  font-family: "Inter", sans-serif;
+  color: #1e293b;
+}
+#root { width: 100%; }
+.app-shell { display: flex; min-height: 100vh; }
+.sidebar {
+  width: 250px;
+  background: linear-gradient(165deg, #312e81, #7c3aed, #0f172a);
+  color: #fff;
+  box-shadow: 0 16px 40px rgba(30, 27, 75, 0.35);
+}
+.sidebar-link {
+  color: #e0e7ff;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+.sidebar-link.active, .sidebar-link:hover {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+  transform: translateX(2px);
+}
+.app-content { flex: 1; }
+.navbar-main {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #e2e8f0;
+}
+.text-gradient {
+  background: linear-gradient(90deg, #4f46e5, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.welcome-pill {
+  background: linear-gradient(135deg, #eef2ff, #f3e8ff);
+  color: #4338ca;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 600;
+}
+.hero-banner {
+  background: linear-gradient(110deg, #312e81, #7c3aed, #2563eb);
+  border-radius: 18px;
+  padding: 22px;
+  color: #fff;
+  box-shadow: 0 16px 35px rgba(49, 46, 129, 0.35);
+}
+.soft-card { border-radius: 16px; }
+.stat-card {
+  background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(238,242,255,0.92));
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(79, 70, 229, 0.12);
+}
+.stat-title { color: #64748b !important; letter-spacing: .5px; }
+.progress-premium { height: 12px; border-radius: 999px; background: #e2e8f0; }
+.progress-bar-premium { background: linear-gradient(90deg, #6366f1, #a855f7, #06b6d4); }
+.question-card {
+  border-radius: 16px;
+  background: linear-gradient(150deg, #ffffff, #f8faff);
+}
+.favorite-btn {
+  border: 1px solid #e2e8f0;
+  background: #fff;
+}
+.badge-chip { border-radius: 999px; padding: 6px 10px; font-weight: 600; }
+.badge-topic { background: #dbeafe; color: #1d4ed8; }
+.badge-difficulty { background: #ede9fe; color: #6d28d9; }
+.badge-company { background: #cffafe; color: #155e75; }
+.badge-frequent { background: #fef3c7; color: #92400e; }
+.role-card {
+  border-radius: 16px;
+  background: linear-gradient(160deg, #ffffff, #faf5ff);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.role-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 30px rgba(124, 58, 237, 0.2) !important;
+}
+.btn-glow {
+  border: none !important;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6) !important;
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+}
+.auth-wrap {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 20% 20%, #2563eb, #7c3aed 55%, #0f172a);
+}
+.auth-card {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+}
+.auth-glass {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+}
+.auth-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .3px;
+  color: #5b21b6;
+  background: #ede9fe;
+  padding: 6px 10px;
+  border-radius: 999px;
+  margin-bottom: 10px;
+}
