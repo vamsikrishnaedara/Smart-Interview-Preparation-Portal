@@ -4,12 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
+@Table(name = "favorite", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "question_id"})})
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "question_id"}))
 public class Favorite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

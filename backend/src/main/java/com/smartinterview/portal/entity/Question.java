@@ -21,5 +21,6 @@ public class Question {
     private String difficulty;
     private String role;
     private String company;
+    @Builder.Default
     private Boolean frequentlyAsked = false;
 }

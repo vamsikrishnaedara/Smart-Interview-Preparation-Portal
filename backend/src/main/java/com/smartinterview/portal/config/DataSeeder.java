@@ -3,20 +3,29 @@ package com.smartinterview.portal.config;
 import com.smartinterview.portal.entity.Question;
 import com.smartinterview.portal.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class DataSeeder implements CommandLineRunner {
     private final QuestionRepository questionRepository;
 
     @Override
+    @Transactional
     public void run(String... args) {
-        if (questionRepository.count() > 0) return;
-        questionRepository.saveAll(List.of(
+        try {
+            if (questionRepository.count() > 0) {
+                log.info("Data already seeded. Skipping...");
+                return;
+            }
+            log.info("Seeding initial interview questions...");
+            questionRepository.saveAll(List.of(
                 q("What is OOPs?", "OOPs is a paradigm based on objects, encapsulation, inheritance and polymorphism.", "OOPs", "Easy", "Java Developer", "Infosys", true),
                 q("Difference between ArrayList and LinkedList", "ArrayList is dynamic array; LinkedList is doubly-linked list with faster insertions.", "Collections", "Medium", "Java Developer", "Wipro", true),
                 q("Difference between HashMap and Hashtable", "HashMap is non-synchronized and allows one null key; Hashtable is synchronized and no null keys.", "Collections", "Medium", "Java Developer", "TCS", true),
@@ -38,6 +47,9 @@ public class DataSeeder implements CommandLineRunner {
                 q("What is JDBC?", "JDBC is Java API to connect and execute SQL with relational databases.", "JDBC", "Medium", "Full Stack Developer", "Oracle", false),
                 q("Difference between monolith and microservices", "Monolith is single deployable unit; microservices are independent services.", "Architecture", "Hard", "Full Stack Developer", "Paytm", true)
         ));
+        } catch (Exception e) {
+            log.error("Error during data seeding: ", e);
+        }
     }
 
     private Question q(String title, String answer, String topic, String difficulty, String role, String company, boolean frequent) {
