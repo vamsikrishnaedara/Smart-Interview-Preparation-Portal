@@ -61,12 +61,7 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration cfg = new CorsConfiguration();
 
-        cfg.setAllowedOrigins(List.of(
-                "http://localhost:5173",
-                "http://127.0.0.1:5173",
-                "http://localhost:3000",
-                "https://smart-interview-platform-i834.onrender.com"
-        ));
+        cfg.setAllowedOriginPatterns(List.of("*"));
 
         cfg.setAllowedMethods(List.of(
                 "GET",
