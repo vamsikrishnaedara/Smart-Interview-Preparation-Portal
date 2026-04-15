@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Locale;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -18,19 +20,21 @@ public class AuthService {
     private final JwtService jwtService;
 
     public AuthResponse register(RegisterRequest request) {
-        if (userRepository.existsByEmail(request.email())) {
+        String email = request.email().trim().toLowerCase(Locale.ROOT);
+        if (userRepository.existsByEmail(email)) {
             throw new RuntimeException("Email already registered");
         }
         User user = userRepository.save(User.builder()
-                .name(request.name())
-                .email(request.email())
+                .name(request.name().trim())
+                .email(email)
                 .password(passwordEncoder.encode(request.password()))
                 .build());
-        return new AuthResponse(jwtService.generateToken(user.getEmail()), user.getName(), user.getEmail());
+        return new AuthResponse(null, user.getName(), user.getEmail());
     }
 
     public AuthResponse login(LoginRequest request) {
-        User user = userRepository.findByEmail(request.email())
+        String email = request.email().trim().toLowerCase(Locale.ROOT);
+        User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Invalid credentials"));
         if (!passwordEncoder.matches(request.password(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");

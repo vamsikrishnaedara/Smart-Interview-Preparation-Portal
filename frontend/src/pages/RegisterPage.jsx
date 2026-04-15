@@ -2,21 +2,35 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import api from "../services/api";
+import { useAuth } from "../context/AuthContext";
+
+function errorMessage(err) {
+  const data = err?.response?.data;
+  if (typeof data?.message === "string") return data.message;
+  if (typeof data === "string") return data;
+  return err?.message || "Registration failed";
+}
 
 export default function RegisterPage() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const onSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const payload = {
+      name: form.name.trim(),
+      email: form.email.trim(),
+      password: form.password,
+    };
     try {
-      await api.post("/auth/register", form);
-      toast.success("Registration successful. Please sign in.");
+      await api.post("/auth/register", payload);
+      toast.success("Registration successful! Please login to continue.");
       navigate("/login");
     } catch (err) {
-      toast.error(err.response?.data?.message || "Registration failed");
+      toast.error(errorMessage(err));
     } finally { setLoading(false); }
   };
 
