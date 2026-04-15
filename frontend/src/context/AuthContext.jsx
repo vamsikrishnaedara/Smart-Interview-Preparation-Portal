@@ -3,22 +3,22 @@ import { createContext, useContext, useMemo, useState } from "react";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(localStorage.getItem("token"));
+  const [token, setToken] = useState(sessionStorage.getItem("token"));
   const [user, setUser] = useState({
-    name: localStorage.getItem("name") || "",
-    email: localStorage.getItem("email") || "",
+    name: sessionStorage.getItem("name") || "",
+    email: sessionStorage.getItem("email") || "",
   });
 
   const login = (data) => {
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("name", data.name);
-    localStorage.setItem("email", data.email);
+    sessionStorage.setItem("token", data.token);
+    sessionStorage.setItem("name", data.name);
+    sessionStorage.setItem("email", data.email);
     setToken(data.token);
     setUser({ name: data.name, email: data.email });
   };
 
   const logout = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     setToken(null);
     setUser({ name: "", email: "" });
   };

@@ -5,7 +5,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8080
 const api = axios.create({ baseURL: API_BASE_URL });
 
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
@@ -15,9 +15,7 @@ api.interceptors.response.use(
   (error) => {
     const status = error?.response?.status;
     if (status === 401 || status === 403) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("name");
-      localStorage.removeItem("email");
+      sessionStorage.clear();
       if (!window.location.pathname.includes("/login")) {
         window.location.href = "/login";
       }
