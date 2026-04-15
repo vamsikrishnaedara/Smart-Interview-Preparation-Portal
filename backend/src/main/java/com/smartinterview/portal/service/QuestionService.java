@@ -10,7 +10,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,11 +32,18 @@ public class QuestionService {
 
     private List<QuestionDto> map(Supplier<List<Question>> supplier) {
         User user = appUserService.currentUser();
-        return supplier.get().stream().map(q -> new QuestionDto(
+        List<Question> questions = supplier.get();
+        
+        Set<Long> favoriteIds = favoriteRepository.findByUser(user).stream()
+                .map(f -> f.getQuestion().getId()).collect(Collectors.toSet());
+        Set<Long> completedIds = completedQuestionRepository.findByUser(user).stream()
+                .map(c -> c.getQuestion().getId()).collect(Collectors.toSet());
+
+        return questions.stream().map(q -> new QuestionDto(
                 q.getId(), q.getTitle(), q.getAnswer(), q.getTopic(), q.getDifficulty(), q.getRole(),
                 q.getCompany(), q.getFrequentlyAsked(),
-                favoriteRepository.findByUserAndQuestion(user, q).isPresent(),
-                completedQuestionRepository.findByUserAndQuestion(user, q).isPresent()
+                favoriteIds.contains(q.getId()),
+                completedIds.contains(q.getId())
         )).toList();
     }
 }
